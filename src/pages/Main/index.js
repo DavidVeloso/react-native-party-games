@@ -5,25 +5,30 @@ import gnillepsIcon from '../../assets/gnillepsIcon.png'
 import imageActionIcon from '../../assets/imageActionIcon.png'
 import whoAmIIcon from '../../assets/whoAmIIcon.png'
 
-export default function Main () {
+export default function Main ({ navigation }) {
+  function handleSelectTeams (gameSelected) {
+    console.log('gameSelected: ', gameSelected)
+    navigation.navigate('SelectTeams')
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}> Select one Game </Text>
       <View style={styles.gamesRow}>
-        <TouchableOpacity style={styles.gameButton}>
+        <TouchableOpacity onPress={() => handleSelectTeams('gnilleps')} style={styles.gameButton}>
           <Image style={styles.gameIcon} source={gnillepsIcon} />
-          <Text style={styles.gameName}> Gnilleps </Text>
+          <Text style={styles.gameName}>Gnilleps</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.gameButton}>
+        <TouchableOpacity onPress={() => handleSelectTeams('imageAndAction')} style={styles.gameButton}>
           <Image style={styles.gameIcon} source={imageActionIcon} />
-          <Text style={styles.gameName}> Image and Action</Text>
+          <Text style={styles.gameName}>Image and Action</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.gamesRow}>
-        <TouchableOpacity style={styles.gameButton}>
+        <TouchableOpacity onPress={() => handleSelectTeams('whoAmI')} style={styles.gameButton}>
           <Image style={styles.gameIcon} source={whoAmIIcon} />
-          <Text style={styles.gameName}> Who Am I? </Text>
+          <Text style={styles.gameName}>Who Am I?</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -35,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#babcdd'
+    backgroundColor: '#c093b2'
   },
   title: {
     fontSize: 30,
