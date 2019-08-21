@@ -21,7 +21,7 @@ export default function SelectTeams ({ navigation }) {
   }
 
   function endSelection () {
-    // Go To Team Members
+    navigation.navigate('addPlayers')
   }
 
   return (
