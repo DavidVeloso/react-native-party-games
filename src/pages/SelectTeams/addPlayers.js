@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { SafeAreaView, Text, View, Button, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
+import { ScrollView, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-navigation'
 
 Icon.loadFont()
 
@@ -25,60 +26,66 @@ export default function AddPlayers ({ navigation }) {
   return (
     <KeyboardAvoidingView
       behavior='padding'
-      enabled={Platform.OS === 'ios'}
+      enabled
+      keyboardVerticalOffset={110}
       style={styles.container}
+      // enabled={Platform.OS === 'ios'}
     >
-      <Icon color='#fff' name='users' size={40} />
-      <Text style={styles.title}> Blue Team Players</Text>
-      {
-        players.map((player, index) => {
-          return (
-            <View key={index} style={styles.newPlayer}>
-              <TextInput
-                placeholder={`Player ${index + 1} name`}
-                placeholderTextColor='#999'
-                maxLength={20}
-                style={styles.input}
-                onChangeText={(e) => handleChange(e, index)}
-                value={(typeof player === 'string') ? player : ''}
-              />
-              <TouchableOpacity onPress={() => removePlayer(index)}>
-                <Icon color='#fff' name='remove' size={35} />
-              </TouchableOpacity>
-            </View>
-          )
-        })
-      }
+      <ScrollView>
+        <View style={styles.players}>
+          <Icon color='#fff' name='users' size={40} />
+          <Text style={styles.title}> Blue Team Players</Text>
+          {
+            players.map((player, index) => {
+              return (
+                <View key={index} style={styles.newPlayer}>
+                  <TextInput
+                    placeholder={`Player ${index + 1} name`}
+                    placeholderTextColor='#999'
+                    maxLength={20}
+                    style={styles.input}
+                    onChangeText={(e) => handleChange(e, index)}
+                    value={(typeof player === 'string') ? player : ''}
+                  />
+                  <TouchableOpacity onPress={() => removePlayer(index)}>
+                    <Icon color='#fff' name='remove' size={35} />
+                  </TouchableOpacity>
+                </View>
+              )
+            })
+          }
 
-      <TouchableOpacity onPress={addPlayer} style={styles.newPlayerButton}>
-        <Icon color='#fff' name='user-plus' size={20} />
-        <Text style={styles.newPlayerButtonText}>new player</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={addPlayer} style={styles.newPlayerButton}>
+            <Icon color='#fff' name='user-plus' size={20} />
+            <Text style={styles.newPlayerButtonText}>new player</Text>
+          </TouchableOpacity>
+        </View>
 
-      <TouchableOpacity
-        // disabled={!hasTeam}
-        // onPress={endSelection}
-        style={styles.doneButton}>
-        <Text style={styles.teamName}>Done</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          // disabled={!hasTeam}
+          // onPress={endSelection}
+          style={styles.doneButton}>
+          <Text style={styles.doneButtonText}>Done</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </KeyboardAvoidingView>
-
-  // </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#c093b2',
-    padding: 30
+    backgroundColor: '#c093b2'
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 40,
     color: '#fff'
+  },
+  players: {
+    padding: 30,
+    alignItems: 'center'
   },
   newPlayer: {
     flexDirection: 'row',
@@ -118,13 +125,19 @@ const styles = StyleSheet.create({
     marginLeft: 7
   },
   doneButton: {
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    flexDirection: 'row',
+    backgroundColor: '#e3ade3',
+    borderColor: '#e3ade3',
+    borderWidth: 3,
+    borderRadius: 6,
+    justifyContent: 'center',
     marginHorizontal: 30,
-    height: 70,
-    backgroundColor: '#e3ade3'
+    height: 70
+  },
+  doneButtonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff'
   }
 })
