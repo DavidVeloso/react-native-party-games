@@ -5,7 +5,7 @@ import { SafeAreaView, Text, TouchableOpacity, StyleSheet } from 'react-native'
 Icon.loadFont()
 
 export default function SelectTeams ({ navigation }) {
-  const [hasTeam, setHasTeams] = useState(false)
+  const [selectedTeams, setSelectedTeams] = useState([])
   const [teams, setTeams] = useState({
     greenTeam: false,
     redTeam: false,
@@ -15,13 +15,13 @@ export default function SelectTeams ({ navigation }) {
 
   function handleSelectTeams (teamName) {
     teams[teamName] = !teams[teamName]
-    const hasSelected = Object.values(teams).filter(selected => selected)
+    const selected = Object.keys(teams).filter(team => (teams[team] === true))
     setTeams(teams => ({ ...teams }))
-    setHasTeams(hasSelected.length >= 2)
+    setSelectedTeams(selected)
   }
 
   function endSelection () {
-    navigation.navigate('addPlayers')
+    navigation.navigate('addPlayers', { selectedTeams })
   }
 
   return (
@@ -48,12 +48,12 @@ export default function SelectTeams ({ navigation }) {
         <Text style={styles.teamName}>Brown Team</Text>
       </TouchableOpacity>
 
-      {!hasTeam && <Text style={styles.minText}>Hey! you must choose at least 2 teams (:</Text>}
+      {!(selectedTeams.length >= 2) && <Text style={styles.minText}>Hey! you must choose at least 2 teams (:</Text>}
 
       <TouchableOpacity
-        disabled={!hasTeam}
+        disabled={!(selectedTeams.length >= 2)}
         onPress={endSelection}
-        style={(hasTeam) ? styles.doneButton : { ...styles.doneButton, backgroundColor: '#d0d0d0' }}>
+        style={((selectedTeams.length >= 2)) ? styles.doneButton : { ...styles.doneButton, backgroundColor: '#d0d0d0' }}>
         <Text style={styles.teamName}>Done</Text>
       </TouchableOpacity>
 

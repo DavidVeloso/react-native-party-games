@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { ScrollView, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
 
 Icon.loadFont()
 
 export default function AddPlayers ({ navigation }) {
+  const { greenTeam, redTeam, yellowTeam, brownTeam } = useSelector(state => state.teams)
+  const dispatch = useDispatch()
+  const teams = navigation.getParam('selectedTeams')
   const [players, setPlayers] = useState([''])
 
   function addPlayer (playerName = '') {
@@ -26,10 +29,9 @@ export default function AddPlayers ({ navigation }) {
   return (
     <KeyboardAvoidingView
       behavior='padding'
-      enabled
-      keyboardVerticalOffset={110}
+      enabled={Platform.OS === 'ios'}
+      keyboardVerticalOffset={100}
       style={styles.container}
-      // enabled={Platform.OS === 'ios'}
     >
       <ScrollView>
         <View style={styles.players}>

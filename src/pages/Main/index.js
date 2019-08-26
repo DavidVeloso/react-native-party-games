@@ -1,6 +1,5 @@
 import React from 'react'
 import { SafeAreaView, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native'
-// import { SafeAreaView } from 'react-navigation'
 
 import gnillepsIcon from '../../assets/gnillepsIcon.png'
 import imageActionIcon from '../../assets/imageActionIcon.png'
@@ -8,7 +7,6 @@ import whoAmIIcon from '../../assets/whoAmIIcon.png'
 
 export default function Main ({ navigation }) {
   function handleSelectTeams (gameSelected) {
-    console.log('gameSelected: ', gameSelected)
     navigation.navigate('selectTeams')
   }
 

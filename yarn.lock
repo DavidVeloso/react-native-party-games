@@ -609,7 +609,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.5.5":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
   integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
@@ -5381,6 +5381,18 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
+react-redux@^7.1.0-rc.1:
+  version "7.1.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.1.0-rc.1.tgz#af42e20901e443191ace09392b1c8b85721a5de6"
+  integrity sha512-ULeRoensr1LZqs1f7HiWYWN67ppRuoBbB5NfSKn3Py92G7qNSnNb+GC2quMgOXXrMBmcq0C9hvPn3xwhQmUXKw==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    hoist-non-react-statics "^3.3.0"
+    invariant "^2.2.4"
+    loose-envify "^1.4.0"
+    prop-types "^15.7.2"
+    react-is "^16.8.6"
+
 react-refresh@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.0.tgz#d421f9bd65e0e4b9822a399f14ac56bda9c92292"
@@ -5467,6 +5479,19 @@ realpath-native@^1.1.0:
   integrity sha512-wlgPA6cCIIg9gKz0fgAPjnzh4yR/LnXovwuo9hvyGvx3h8nX4+/iLZplfUWasXpqD8BdnGnP5njOFjkUwPzvjA==
   dependencies:
     util.promisify "^1.0.0"
+
+redux-persist@^6.0.0-pre2.1:
+  version "6.0.0-pre2.1"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-6.0.0-pre2.1.tgz#782ec7e6231787cb2ec4fa9fbfaf8e714e9d2361"
+  integrity sha512-Gj4YuVgTsl2aSTQvonKsqqaWqODB0I32Ao8R0TLl9njfyXJ53Ab0+h3ciJA2ylYWYkF+1smRoYRRnCd63TE8Tw==
+
+redux@^4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.0-rc.1.tgz#80ec04db9837711dbf67e8f1915726dbcdbcbd88"
+  integrity sha512-5IP07Fd76jNX0edDrWpF09DLNtOoe1ZOCEIqg402jrvBBWLQ046c1uMlAC9imapuOLVTv8pYvJHuzN7wydrPCA==
+  dependencies:
+    loose-envify "^1.1.0"
+    symbol-observable "^1.2.0"
 
 regenerate-unicode-properties@^8.1.0:
   version "8.1.0"
@@ -6191,6 +6216,11 @@ symbol-observable@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.1.tgz#8340fc4702c3122df5d22288f88283f513d3fdd4"
   integrity sha1-g0D8RwLDEi310iKI+IKD9RPT/dQ=
+
+symbol-observable@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
+  integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
 
 symbol-tree@^3.2.2:
   version "3.2.4"
