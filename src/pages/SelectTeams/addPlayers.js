@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { ScrollView, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
+import { teamColors } from '../../helpers'
 
 Icon.loadFont()
 
-export default function AddPlayers ({ navigation }) {
-  const { greenTeam, redTeam, yellowTeam, brownTeam } = useSelector(state => state.teams)
+function AddPlayers ({ navigation }) {
+  const teamName = navigation.getParam('teamName')
+  const team = useSelector(state => state.teams[teamName])
   const dispatch = useDispatch()
-  const teams = navigation.getParam('selectedTeams')
-  const [players, setPlayers] = useState([''])
+  const [players, setPlayers] = useState(team.players)
 
   function addPlayer (playerName = '') {
     if (players.length === 5) return
@@ -26,17 +27,22 @@ export default function AddPlayers ({ navigation }) {
     setPlayers(players => ([...players]))
   }
 
+  function handleEndSelection () {
+    dispatch({ type: 'SET_PLAYERS', payload: { teamName, players } })
+    navigation.goBack()
+  }
+
   return (
     <KeyboardAvoidingView
       behavior='padding'
       enabled={Platform.OS === 'ios'}
       keyboardVerticalOffset={100}
-      style={styles.container}
+      style={[styles.container, { backgroundColor: teamColors[teamName] }]}
     >
       <ScrollView>
         <View style={styles.players}>
           <Icon color='#fff' name='users' size={40} />
-          <Text style={styles.title}> Blue Team Players</Text>
+          <Text style={styles.title}> {teamName} Team Players</Text>
           {
             players.map((player, index) => {
               return (
@@ -64,8 +70,7 @@ export default function AddPlayers ({ navigation }) {
         </View>
 
         <TouchableOpacity
-          // disabled={!hasTeam}
-          // onPress={endSelection}
+          onPress={handleEndSelection}
           style={styles.doneButton}>
           <Text style={styles.doneButtonText}>Done</Text>
         </TouchableOpacity>
@@ -76,8 +81,7 @@ export default function AddPlayers ({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#c093b2'
+    flex: 1
   },
   title: {
     fontSize: 30,
@@ -110,10 +114,10 @@ const styles = StyleSheet.create({
   newPlayerButton: {
     alignSelf: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#e3ade3',
+    backgroundColor: '#c093b2',
     borderWidth: 3,
     borderRadius: 6,
-    borderColor: '#e3ade3',
+    borderColor: '#c093b2',
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 15,
@@ -129,8 +133,8 @@ const styles = StyleSheet.create({
   doneButton: {
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: '#e3ade3',
-    borderColor: '#e3ade3',
+    backgroundColor: '#c093b2',
+    borderColor: '#c093b2',
     borderWidth: 3,
     borderRadius: 6,
     justifyContent: 'center',
@@ -143,3 +147,12 @@ const styles = StyleSheet.create({
     color: '#fff'
   }
 })
+
+AddPlayers.navigationOptions = screenProps => {
+  const teamName = screenProps.navigation.getParam('teamName')
+  return {
+    headerStyle: { backgroundColor: teamColors[teamName] }
+  }
+}
+
+export default AddPlayers

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { SafeAreaView, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { teamColors } from '../../helpers'
 
 Icon.loadFont()
 
@@ -14,10 +15,11 @@ export default function SelectTeams ({ navigation }) {
   })
 
   function handleSelectTeams (teamName) {
-    teams[teamName] = !teams[teamName]
-    const selected = Object.keys(teams).filter(team => (teams[team] === true))
-    setTeams(teams => ({ ...teams }))
-    setSelectedTeams(selected)
+    navigation.navigate('addPlayers', { teamName })
+    // teams[teamName] = !teams[teamName]
+    // const selected = Object.keys(teams).filter(team => (teams[team] === true))
+    // setTeams(teams => ({ ...teams }))
+    // setSelectedTeams(selected)
   }
 
   function endSelection () {
@@ -28,22 +30,22 @@ export default function SelectTeams ({ navigation }) {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Select Teams</Text>
 
-      <TouchableOpacity onPress={() => handleSelectTeams('greenTeam')} style={[styles.teamRow, { backgroundColor: '#89afb4' }]}>
+      <TouchableOpacity onPress={() => handleSelectTeams('Green')} style={[styles.teamRow, { backgroundColor: teamColors['Green'] }]}>
         {teams.greenTeam && <Icon name='check-circle' size={40} color='#fff' />}
         <Text style={styles.teamName}>Green Team</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleSelectTeams('redTeam')} style={[styles.teamRow, { backgroundColor: '#d6735d' }]}>
+      <TouchableOpacity onPress={() => handleSelectTeams('Red')} style={[styles.teamRow, { backgroundColor: teamColors['Red'] }]}>
         {teams.redTeam && <Icon name='check-circle' size={40} color='#fff' />}
         <Text style={styles.teamName}>Red Team</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleSelectTeams('yellowTeam')} style={[styles.teamRow, { backgroundColor: '#efcc82' }]}>
+      <TouchableOpacity onPress={() => handleSelectTeams('Yellow')} style={[styles.teamRow, { backgroundColor: teamColors['Yellow'] }]}>
         {teams.yellowTeam && <Icon name='check-circle' size={40} color='#fff' />}
         <Text style={styles.teamName}>Yellow Team</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleSelectTeams('brownTeam')} style={[styles.teamRow, { backgroundColor: '#826860' }]}>
+      <TouchableOpacity onPress={() => handleSelectTeams('Brown')} style={[styles.teamRow, { backgroundColor: teamColors['Brown'] }]}>
         {teams.brownTeam && <Icon name='check-circle' size={40} color='#fff' />}
         <Text style={styles.teamName}>Brown Team</Text>
       </TouchableOpacity>

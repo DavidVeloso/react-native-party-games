@@ -1,12 +1,15 @@
 const INITIAL_STATE = {
-  greenTeam: { players: [], score: 0 },
-  redTeam: { players: [], score: 0 },
-  yellowTeam: { players: [], score: 0 },
-  brownTeam: { players: [], score: 0 }
+  Green: { players: [''], score: 0 },
+  Red: { players: [''], score: 0 },
+  Yellow: { players: [''], score: 0 },
+  Brown: { players: [''], score: 0 }
 }
 
 export default function teams (state = INITIAL_STATE, action) {
   switch (action.type) {
+    case 'SET_PLAYERS':
+      state[action.payload.teamName].players = action.payload.players
+      return { ...state }
     case 'INCREASE_SCORE':
       state[action.payload.teamName].score++
       return { ...state }
