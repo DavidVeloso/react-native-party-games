@@ -1,52 +1,44 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useSelector } from 'react-redux'
 import { SafeAreaView, Text, TouchableOpacity, StyleSheet } from 'react-native'
+
 import { teamColors } from '../../helpers'
 
 Icon.loadFont()
 
 export default function SelectTeams ({ navigation }) {
-  const [selectedTeams, setSelectedTeams] = useState([])
-  const [teams, setTeams] = useState({
-    greenTeam: false,
-    redTeam: false,
-    yellowTeam: false,
-    brownTeam: false
-  })
+  const selectedTeams = useSelector(state => state.teams.selectedTeams)
 
-  function handleSelectTeams (teamName) {
+  function handleAddPlayers (teamName) {
     navigation.navigate('addPlayers', { teamName })
-    // teams[teamName] = !teams[teamName]
-    // const selected = Object.keys(teams).filter(team => (teams[team] === true))
-    // setTeams(teams => ({ ...teams }))
-    // setSelectedTeams(selected)
   }
 
-  function endSelection () {
-    navigation.navigate('addPlayers', { selectedTeams })
+  function handleEndSelection () {
+
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Select Teams</Text>
 
-      <TouchableOpacity onPress={() => handleSelectTeams('Green')} style={[styles.teamRow, { backgroundColor: teamColors['Green'] }]}>
-        {teams.greenTeam && <Icon name='check-circle' size={40} color='#fff' />}
+      <TouchableOpacity onPress={() => handleAddPlayers('Green')} style={[styles.teamRow, { backgroundColor: teamColors['Green'] }]}>
+        {selectedTeams.includes('Green') && <Icon name='check-circle' size={40} color='#fff' />}
         <Text style={styles.teamName}>Green Team</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleSelectTeams('Red')} style={[styles.teamRow, { backgroundColor: teamColors['Red'] }]}>
-        {teams.redTeam && <Icon name='check-circle' size={40} color='#fff' />}
+      <TouchableOpacity onPress={() => handleAddPlayers('Red')} style={[styles.teamRow, { backgroundColor: teamColors['Red'] }]}>
+        {selectedTeams.includes('Red') && <Icon name='check-circle' size={40} color='#fff' />}
         <Text style={styles.teamName}>Red Team</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleSelectTeams('Yellow')} style={[styles.teamRow, { backgroundColor: teamColors['Yellow'] }]}>
-        {teams.yellowTeam && <Icon name='check-circle' size={40} color='#fff' />}
+      <TouchableOpacity onPress={() => handleAddPlayers('Yellow')} style={[styles.teamRow, { backgroundColor: teamColors['Yellow'] }]}>
+        {selectedTeams.includes('Yellow') && <Icon name='check-circle' size={40} color='#fff' />}
         <Text style={styles.teamName}>Yellow Team</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleSelectTeams('Brown')} style={[styles.teamRow, { backgroundColor: teamColors['Brown'] }]}>
-        {teams.brownTeam && <Icon name='check-circle' size={40} color='#fff' />}
+      <TouchableOpacity onPress={() => handleAddPlayers('Brown')} style={[styles.teamRow, { backgroundColor: teamColors['Brown'] }]}>
+        {selectedTeams.includes('Brown') && <Icon name='check-circle' size={40} color='#fff' />}
         <Text style={styles.teamName}>Brown Team</Text>
       </TouchableOpacity>
 
@@ -54,8 +46,9 @@ export default function SelectTeams ({ navigation }) {
 
       <TouchableOpacity
         disabled={!(selectedTeams.length >= 2)}
-        onPress={endSelection}
-        style={((selectedTeams.length >= 2)) ? styles.doneButton : { ...styles.doneButton, backgroundColor: '#d0d0d0' }}>
+        onPress={handleEndSelection}
+        style={((selectedTeams.length >= 2)) ? styles.doneButton : { ...styles.doneButton, backgroundColor: '#d0d0d0' }}
+      >
         <Text style={styles.teamName}>Done</Text>
       </TouchableOpacity>
 

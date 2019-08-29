@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { ScrollView, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
@@ -9,26 +9,39 @@ Icon.loadFont()
 function AddPlayers ({ navigation }) {
   const teamName = navigation.getParam('teamName')
   const team = useSelector(state => state.teams[teamName])
+  const selectedTeams = useSelector(state => state.teams.selectedTeams)
   const dispatch = useDispatch()
   const [players, setPlayers] = useState(team.players)
 
-  function addPlayer (playerName = '') {
-    if (players.length === 5) return
-    setPlayers(players => ([...players, playerName]))
+  useEffect(() => {
+    if (players.length === 0) setPlayers([''])
+  }, [])
+
+  function handleAddPlayer (playerName = '') {
+    (players.length < 5) && setPlayers(players => ([...players, playerName]))
   }
 
-  function handleChange (playerName, index) {
+  function handleChangeInput (playerName, index) {
     players[index] = playerName
     setPlayers(players => ([...players]))
   }
 
-  function removePlayer (index) {
+  function handleRemovePlayer (index) {
     players.splice(index, 1)
     setPlayers(players => ([...players]))
   }
 
   function handleEndSelection () {
-    dispatch({ type: 'SET_PLAYERS', payload: { teamName, players } })
+    const playersFiltered = players.filter(p => (p !== '' && typeof p === 'string'))
+    if (playersFiltered.length > 0) {
+      if (!selectedTeams.includes(teamName)) {
+        selectedTeams.push(teamName)
+      }
+    } else {
+      selectedTeams.splice(selectedTeams.indexOf(teamName), 1)
+    }
+    dispatch({ type: 'SET_PLAYERS', payload: { teamName, players: playersFiltered } })
+    dispatch({ type: 'SET_SELECTED_TEAMS', payload: { selectedTeams } })
     navigation.goBack()
   }
 
@@ -52,10 +65,10 @@ function AddPlayers ({ navigation }) {
                     placeholderTextColor='#999'
                     maxLength={20}
                     style={styles.input}
-                    onChangeText={(e) => handleChange(e, index)}
+                    onChangeText={(e) => handleChangeInput(e, index)}
                     value={(typeof player === 'string') ? player : ''}
                   />
-                  <TouchableOpacity onPress={() => removePlayer(index)}>
+                  <TouchableOpacity onPress={() => handleRemovePlayer(index)}>
                     <Icon color='#fff' name='remove' size={35} />
                   </TouchableOpacity>
                 </View>
@@ -63,7 +76,7 @@ function AddPlayers ({ navigation }) {
             })
           }
 
-          <TouchableOpacity onPress={addPlayer} style={styles.newPlayerButton}>
+          <TouchableOpacity onPress={handleAddPlayer} style={styles.newPlayerButton}>
             <Icon color='#fff' name='user-plus' size={20} />
             <Text style={styles.newPlayerButtonText}>new player</Text>
           </TouchableOpacity>
